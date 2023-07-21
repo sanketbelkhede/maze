@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blog</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <!--<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">-->
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <!--
+  <li><div class='nav navbar-default'>
+    <h2>MAZE</h2>
+    <% if current_user %>
+        Hi <%= link_to current_user.name, user_path(current_user) %>
+        <% if current_user.admin? %>
+          <%= link_to "Users", admin_path %>
+          <%= link_to "Reports", admin_reports_path%>
+        <%end%>
+        <%= link_to "My Articles",  myarticles_path %>
+        <%= link_to "Log out", sign_out_path %>
+    <% end %>
+  </div>
+  </li>-->
+  <!--<header class="nav-header navbar-static-top fixed affix-top">
+    <nav class="head">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <li class="navbar-brand">
+          <% if current_user%>
+            <%= link_to "MAZE", articles_path %>
+          <% else %>
+            <%= link_to "MAZE", root_path %>
+          <% end %></li>
+        </div>
+        
+        <ul class="nav navbar-nav navbar-right">
+          <% if current_user %>
+            <li><%= link_to current_user.name, user_path(current_user)%></li>
+            <% if current_user.admin? %>
+              <li><%= link_to "Manage Users", admin_path %></li>
+              <li><%= link_to "Reports", admin_reports_path%></li>
+            <% end %>
+            <li><%= link_to "My Articles",  myarticles_path %></li>
+            <li><%= link_to "Log out", sign_out_path %></li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+  </header>-->
+  <body>
+    <%= yield %>
+  </body>
+</html>

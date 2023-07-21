@@ -1,0 +1,138 @@
+
+
+<p id="notice"><%= notice %></p>
+
+<h2>Register</h2>
+
+<div class="image_64">
+    <div class="navbar">
+        <div class="Frame_38">
+            <div class="Maze">Maze</div>
+        </div>
+
+        <div class="Frame_39">
+            <img src="<%= image_url('Frame_39.png') %>" alt="Description of the image">
+            <div class="Group">
+                <img src="<%= image_url('Group.png') %>" alt="Description of the image">
+                <div class="Vector">
+                    <img src="<%= image_url('Vector.png') %>" alt="Description of the image">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="Rectangle_create_blurr">
+
+        <div class="Textbox_create_account">
+            <div class="Text_create_account_signup">
+                Create account
+            </div>
+
+            <div class="For_business_band_or_celebrity">
+                For business, band or celebrity.
+            </div>
+        </div>
+
+        <form action="/users" method="post">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        
+        <div class="Entry_field_first_name">
+        <label class="entry_text" for="firstname">First name </label><br>
+        <input class="entry_box" type="firstname" id="firstname" name="user[firstname]" value="<%= @user.firstname %>" />
+        </div>
+
+        <div class="Entry_field_last_name">
+        <label class="entry_text" for="lastname">Last name </label><br>
+        <input class="entry_box" type="lastname" id="lastname" name="user[lastname]" value="<%= @user.lastname %>" />
+        </div>
+
+        <div class="Entry_field_email_signup">
+        <label class="entry_text" for="email">Email</label><br>
+        <input class="entry_box" type="email" id="email" name="user[email]" value="<%= @user.email %>" />
+        </div>
+
+        <div class="Entry_field_phone_number">
+        <label class="entry_text" for="mobile">Phone number</label><br>
+        <input class="entry_box" type="mobile" id="mobile" name="user[mobile]" />
+        </div>
+        
+        <div class="Entry_field_password_signup">
+        <label class="entry_text" for="password">Password</label><br>
+        <input class="entry_box" type="password" id="password" name="user[password]" />
+        </div>
+
+        <div class="Entry_field_confirm_password">
+        <label class="entry_text" for="password_confirmation">Confirm Password</label><br>
+        <input class="entry_box" type="password" id="password_confirmation" name="user[password_confirmation]" />
+        </div>
+
+        <!--<div class="Remember_me_signup">
+            <div class="Remember_me_check">
+                <%= check_box_tag 'user[remember_me]', '1', false, class: "check_rem"%>
+            </div>
+
+            <div class="Remember_me_text">
+            <%= label_tag 'user[remember_me]', 'Remember me' %>
+            </div>
+        </div>
+
+        <div class="terms">
+            <div class="Remember_me_check">
+                <%= check_box_tag 'user[remember_me]', '1', false, class: "check_rem"%>
+            </div>
+
+            <div class="terms_text">
+            <%= label_tag 'user[remember_me]', 'I agree to all the Terms and Privacy policy'%>
+            </div>
+        </div>
+        -->
+
+        <div class="Rectangle_1051_signup">
+            <input type="submit" value="Login" id="login_submit">
+        </div>
+        </form>
+        <div class="Already_have_an_account_Log_In"><%= "Already have an account? " %>
+            <%= link_to 'Log In', sign_in_path, class: "signup_link_signin"%>
+        </div>
+    </div>
+
+    
+</div>
+
+
+<!-- ################################################################## 
+
+<div class="w-96 flex flex-col flex-auto justify-center items-center">
+
+<h2 class="text-center">Register</h2>
+
+<form action="/users" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  
+  <div>
+  <label for="name">Name </label><br>
+  <input type="name" id="name" name="user[name]" value="<%= @user.name %>" />
+  </div>
+
+  <div>
+  <label for="mobile">Mobile</label><br>
+  <input type="mobile" id="mobile" name="user[mobile]" />
+  </div>
+  
+  <div>
+  <label for="email">Email</label><br>
+  <input type="email" id="email" name="user[email]" value="<%= @user.email %>" />
+  </div>
+
+  <div>
+  <label for="password">Password</label><br>
+  <input type="password" id="password" name="user[password]" />
+  </div>
+
+  <div>
+  <input type="submit" value="Register">
+  </div>
+</form>
+
+<li>Already have an account? <%= link_to 'Log In', sign_in_path %></li>
+
+</div>-->

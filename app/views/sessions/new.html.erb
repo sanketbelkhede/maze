@@ -1,0 +1,63 @@
+<div class="note" id="notice"><%= notice %></div>
+
+<div class="image_64">
+
+    <div class="navbar">
+        <div class="Frame_38">
+            <div class="Maze">Maze</div>
+        </div>
+
+        <div class="Frame_39">
+            <img src="<%= image_url('Frame_39.png') %>" alt="Description of the image">
+            <div class="Group">
+                <img src="<%= image_url('Group.png') %>" alt="Description of the image">
+                <div class="Vector">
+                    <img src="<%= image_url('Vector.png') %>" alt="Description of the image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="Line_11"></div>
+    
+    <div class="Rectangle_4_Signin">
+        <div class="Text_Signin_Login">
+            <div class="Login_word">Login</div>
+        </div>
+            
+        <form action="/sessions" method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+            <div class="Entry_field_email">
+            <label class="Email_word" for="email">Email</label>
+            <input class="Group_16_email" email="email" type="email" id="email" name="user[email]" value="<%= @user.email %>" />
+            </div>
+
+            <div class="Entry_field_password">
+            <label class="Password_word" for="password">Password</label>
+            <input class="Group_16_password" type="password" id="password" name="user[password]" />
+            </div>
+
+            <div class="Remember_me">
+                <div class="Remember_me_check">
+                    <%= check_box_tag 'user[remember_me]', '1', false, class: "check_rem"%>
+                </div>
+
+                <div class="Remember_me_text">
+                <%= label_tag 'user[remember_me]', 'Remember me' %>
+                </div>
+            </div>
+
+            <%# <div class="Group_2008_signin"></div> %>
+            <div class="Rectangle_1051_signin">
+                <input type="submit" value="Login" id="login_submit">
+            </div>
+        </form>
+
+        <div class="Dont_have_an_account_Sign_Up"><%= "Don't have an account? " %>
+            <%= link_to 'Sign Up', register_path, class: "signup_link_signin"%>
+        </div>
+    </div>
+    
+        
+</div>

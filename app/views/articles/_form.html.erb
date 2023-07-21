@@ -1,0 +1,48 @@
+<%= form_with model: article do |form| %>
+    <div>
+      <%= form.label :title %><br>
+      <%= form.text_field :title %>
+      <% article.errors.full_messages_for(:title).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  
+    <div>
+      <%= form.label :body %><br>
+      <%= form.text_area :body %><br>
+      <% article.errors.full_messages_for(:body).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.label :dob %><br>
+      <%= form.date_field :dob %><br>
+      <% article.errors.full_messages_for(:dob).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+
+    <!--<%= form_with(model: @article, url: @article, method: :patch) do |form| %>
+      <%= form.hidden_field :authenticity_token, value: form_authenticity_token %>
+
+      <% if @article.privacy? %>
+        <%= form.submit 'Make Public', name: 'article[privacy]', value: 'false' %>
+      <% else %>
+        <%= form.submit 'Make Private', name: 'article[privacy]', value: 'true' %>
+      <% end %>
+    <% end %>
+    -->
+    <div>
+      <label for="privacy">Privacy</label><br>
+      <select id="article[privacy]" name="article[privacy]">
+        <option value="false">Public</option>
+        <option value="true">Private</option>
+      </select>
+    </div>
+  
+    <div>
+      <p><%= form.submit %></p>
+    </div>
+  <% end %>
+  

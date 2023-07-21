@@ -1,0 +1,13 @@
+<p><%= link_to 'Back to Admin', admin_path %></p>
+
+<p>
+CSV:
+  <%= link_to "All User Report", users_download_csv_path(format: :csv) %> |
+  <%= link_to "Post Wise Report", articles_download_csv_path(format: :csv) %> |
+  <%= link_to "More than 2 Articles Report", users_download_10_csv_path(format: :csv) %>
+</p>
+<p>
+XLSX:
+  <%= link_to "Articles", articles_download_xlsx_path(format: :csv), class: 'button' %>
+  <%= link_to "Users", users_download_xlsx_path(format: :csv), class: 'button' %>
+</p>

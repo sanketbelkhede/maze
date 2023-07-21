@@ -1,0 +1,71 @@
+<p id="notice"><%= notice %></p>
+<li><%= link_to 'Back to Home', articles_path %></li>
+
+
+<li><%= link_to "New Article", new_article_path %> </li>
+
+
+<h2>Articles</h2>
+
+  <% @articles.reverse.each do |article| %>
+      <div class='boxo'>
+      <div class = 'box'>
+
+        <li><%= link_to article.user.name, user_path(article.user) %></li>
+
+
+        <p>
+          <li><%= link_to article.title, article %></li>
+          <li><%= article.privacy? ? "Private" : ""%></li>
+          <% if article.privacy? %>
+            <form action=<%="/myarticles/#{article.id}/public"%> method="patch">
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+              <input type="hidden" name="article[privacy]" value="<%= article.privacy %>">
+              <input type="submit" value="Public">
+            </form>
+          <% else %>
+            <form action=<%="/myarticles/#{article.id}/private"%> method="patch">
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+              <input type="hidden" name="article[privacy]" value="<%= article.privacy %>">
+
+              <input type="submit" value="Private">
+            </form>
+          <% end %>
+        </p>
+
+
+        <% like = current_user.likes.find_by(article: article) %>
+        <% if like.nil? %>
+          <form action='/likes/create_like' method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="like[article_id]" value="<%= article.id %>">
+            <input type="submit" value="Like">
+          </form>
+        <% else %>
+          <form action=<%="/likes/#{like.id}/destroy_like"%> method="delete">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="like[article_id]" value="<%= article.id %>">
+            <input type="hidden" name="like[like_id]" value="<%= like.id %>">
+
+            <input type="submit" value="Unlike">
+          </form>
+        <% end %>
+
+
+        <%= article.likes.count %> Likes
+        <!--<% article.likes.each do |like| %>
+          <p>Liked by: <%= like.user.email%> </p>
+        <% end %>-->
+
+        <% if article.comments.any? %>
+          <p><%= article.comments.last.content %> - <%= article.comments.last.user.name %></p>
+        <% end %>
+
+        <!--<% article.comments.each do |comment| %>
+          <p> <%= comment.content %> By: <%= comment.user.email%></p>
+        <% end %>-->
+      </div>
+      </div>
+    
+  <% end %>
+

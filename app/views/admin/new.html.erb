@@ -1,0 +1,77 @@
+<p id="notice"><%= notice %></p>
+<%= link_to 'Back to Admin', admin_path %>
+
+<li><div class='nav navbar-default'>
+    <h2>MAZE</h2>
+    <% if current_user %>
+        Hi <%= link_to current_user.name, user_path(current_user) %>
+        <% if current_user.admin? %>
+          <%= link_to "Users", admin_path %>
+          <%= link_to "Reports", admin_reports_path%>
+        <%end%>
+        <%= link_to "My Articles",  myarticles_path %>
+        <%= link_to "Log out", sign_out_path %>
+    <% end %>
+  </div>
+  </li>
+  <header class="nav-header navbar-static-top fixed affix-top">
+    <nav class="head">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <li class="navbar-brand">
+          <% if current_user%>
+            <%= link_to "MAZE", articles_path %>
+          <% else %>
+            <%= link_to "MAZE", root_path %>
+          <% end %></li>
+        </div>
+        
+        <ul class="nav navbar-nav navbar-right">
+          <% if current_user %>
+            <li><%= link_to current_user.name, user_path(current_user)%></li>
+            <% if current_user.admin? %>
+              <li><%= link_to "Manage Users", admin_path %></li>
+              <li><%= link_to "Reports", admin_reports_path%></li>
+            <% end %>
+            <li><%= link_to "My Articles",  myarticles_path %></li>
+            <li><%= link_to "Log out", sign_out_path %></li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+  </header>
+<h1>New User</h1>
+<form action="/admin/create_user" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  
+  <div>
+  <label for="name">Name </label><br>
+  <input type="name" id="name" name="user[name]" value="<%= @user.name %>" />
+  </div>
+
+  <div>
+  <label for="mobile">Mobile</label><br>
+  <input type="mobile" id="mobile" name="user[mobile]" />
+  </div>
+  
+  <div>
+  <label for="email">Email</label><br>
+  <input type="email" id="email" name="user[email]" value="<%= @user.email %>" />
+  </div>
+
+  <div>
+  <label for="password">Password</label><br>
+  <input type="password" id="password" name="user[password]" />
+  </div>
+
+  <div>
+    <label for="admin">Role</label><br>
+    <select id="user[admin]" name="user[admin]">
+      <option value="false">User</option>
+      <option value="true">Admin</option>
+    </select>
+  </div>
+
+
+  <input type="submit" value="Register">
+</form>

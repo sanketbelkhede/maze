@@ -1,0 +1,78 @@
+<p id="notice"><%= notice %></p>
+<li><%= link_to 'Back to Home', articles_path %></li>
+
+<h3>Import Users</h3>
+<%= form_with url: admin_import_path, method: :post do |form| %>
+    <%= form.file_field :file%>
+    <input type="submit" value="Upload Users">
+<% end %>
+
+<p><%= link_to "Create User", admin_new_path, class: 'button'%> </p>
+<!--
+<h2>Users</h2>
+    <% @users.each do |user| %>
+        <% if user.id != 1 %>
+          <div class = 'boxo'>
+          <div class = 'box'>
+            <li>Name: <%= link_to user.name, user_path(user) %></li>
+            <p>Email: <%= user.email %></p>
+            <p>Mobile: <%= user.mobile %></p>
+            <p>Role: <%= user.admin? ? "Admin" : "User" %></p>
+            <p><% if user.articles.any? %>  
+              <li><%= link_to user.articles.last.title, user.articles.last %></li>
+            <% end %></p>
+              <% if user.active? %>
+                <form action=<%="/admin/#{user.id}/deactivate_user"%> method="patch">
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                  <input type="hidden" name="user[active]" value="<%= user.active %>">
+                  <input type="submit" value="Deactivate">
+                </form>
+              <% else %>
+                <form action=<%="/admin/#{user.id}/activate_user"%> method="patch">
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                  <input type="hidden" name="user[active]" value="<%= user.active %>">
+
+                  <input type="submit" value="Activate">
+                </form>
+              <% end %></p>
+            
+          </div>
+          </div>
+        <% end %>      
+    <% end %>-->
+
+
+<h2>Users</h2>
+    <% @users.each do |user| %>
+        <% if user.id != 1 %>
+          <div class = 'boxo'>
+          <div class = 'box'>
+            <li>Name: <%= link_to user.name, user_path(user) %></li>
+            <p>Email: <%= user.email %></p>
+            <p>Mobile: <%= user.mobile %></p>
+            <p>Role: <%= user.admin? ? "Admin" : "User" %></p>
+            <p><% if user.articles.any? %>  
+              <li><%= link_to user.articles.last.title, user.articles.last %></li>
+            <% end %></p>
+              <% if user.active? %>
+                <form action=<%="/admin/#{user.id}/deactivate_user"%> method="patch">
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                  <input type="hidden" name="user[active]" value="<%= user.active %>">
+                  <input type="submit" value="Deactivate">
+                </form>
+              <% else %>
+                <form action=<%="/admin/#{user.id}/activate_user"%> method="patch">
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                  <input type="hidden" name="user[active]" value="<%= user.active %>">
+
+                  <input type="submit" value="Activate">
+                </form>
+              <% end %></p>
+            
+          </div>
+          </div>
+        <% end %>      
+    <% end %>
+
+
+

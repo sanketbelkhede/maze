@@ -1,12 +1,13 @@
 class LikesController < ApplicationController
     def create
-        @like = current_user.likes.new(like_params)
+        @like = current_user.likes.new(like_params.except(:redirect_to))
 
         if !@like.save
             flash[:notice] = @like.errors.full_messages.to_sentence
         end
-
-        redirect_to @like.article
+        entity = @like.entity
+        article = entity.is_a?(Article) ? entity : entity.article
+        like_params[:redirect_to] == Article ? redirect_to(articles_path) : redirect_to(article)
     end
 
     # def create_like
@@ -21,9 +22,10 @@ class LikesController < ApplicationController
 
     def destroy
         @like = current_user.likes.find(params[:id])
-        article = @like.article
+        entity = @like.entity
+        article = entity.is_a?(Article) ? entity : entity.article
         @like.destroy
-        redirect_to article
+        destroy_params[:redirect_to] == Articles ? redirect_to(articles_path) : redirect_to(article)
     end
 
     # def destroy_like
@@ -37,7 +39,11 @@ class LikesController < ApplicationController
     private
 
     def like_params
-        params.require(:like).permit(:article_id)
+        params.require(:like).permit(:entity_id, :entity_type, :redirect_to)
+    end
+
+    def destroy_params
+        params.require(:like).permit(:redirect_to)
     end
 
 end

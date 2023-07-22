@@ -11,17 +11,19 @@
               <li><%= link_to article.user.name, user_path(article.user)%></li>
               <p>
               <li><%= link_to article.title, article %></li></p>
-              <% like = current_user.likes.find_by(article: article) %>
+              <% like = current_user.likes.find_by(entity_type: "Article", entity_id: article.id) %>
               <% if like.nil? %>
-                <form action='/likes/create_like' method="post">
+                <form action='/likes' method="post">
                   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-                  <input type="hidden" name="like[article_id]" value="<%= article.id %>">
+                  <input type="hidden" name="like[entity_id]" value="<%= article.id %>">
+                  <input type="hidden" name="like[entity_type]" value="<%= "Article" %>">
+                  <input type="hidden" name="like[redirect_to]" value="<%= "Articles" %>">
                   <input type="submit" value="Like">
                 </form>
               <% else %>
-                <form action=<%="/likes/#{like.id}/destroy_like"%> method="delete">
+                <form action="<%= like_path(like) %>" method="delete">
                   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-                  <input type="hidden" name="like[article_id]" value="<%= article.id %>">
+                  <input type="hidden" name="like[redirect_to]" value="<%= "Articles" %>">
                   <input type="hidden" name="like[like_id]" value="<%= like.id %>">
 
                   <input type="submit" value="Unlike">

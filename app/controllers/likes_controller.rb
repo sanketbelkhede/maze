@@ -7,7 +7,7 @@ class LikesController < ApplicationController
         end
         entity = @like.entity
         article = entity.is_a?(Article) ? entity : entity.article
-        like_params[:redirect_to] == Article ? redirect_to(articles_path) : redirect_to(article)
+        like_params[:redirect_to] == "Articles" ? redirect_to(articles_path) : redirect_to(article)
     end
 
     # def create_like
@@ -25,7 +25,7 @@ class LikesController < ApplicationController
         entity = @like.entity
         article = entity.is_a?(Article) ? entity : entity.article
         @like.destroy
-        destroy_params[:redirect_to] == Articles ? redirect_to(articles_path) : redirect_to(article)
+        destroy_params[:redirect_to] == "Articles" ? redirect_to(articles_path) : redirect_to(article)
     end
 
     # def destroy_like

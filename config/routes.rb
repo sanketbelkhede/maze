@@ -19,8 +19,8 @@ Rails.application.routes.draw do
   patch 'myarticles/:id/public', to: 'articles#public'
   
   resources :likes, only: [:create, :destroy]
-  post '/likes/create_like', to: 'likes#create_like'
-  delete '/likes/:id/destroy_like', to: 'likes#destroy_like'
+  # post '/likes/create_like', to: 'likes#create_like'
+  # delete '/likes/:id/destroy_like', to: 'likes#destroy_like'
 
   # get '/articles', to: 'articles#index'
   # post '/articles', to: 'articles#create'

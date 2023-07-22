@@ -15,14 +15,6 @@
       <% end %>
     </div>
 
-    <div>
-      <%= form.label :dob %><br>
-      <%= form.date_field :dob %><br>
-      <% article.errors.full_messages_for(:dob).each do |message| %>
-        <div><%= message %></div>
-      <% end %>
-    </div>
-
     <!--<%= form_with(model: @article, url: @article, method: :patch) do |form| %>
       <%= form.hidden_field :authenticity_token, value: form_authenticity_token %>
 

@@ -1,0 +1,70 @@
+<li><%= link_to 'Back to Home', articles_path %></li>
+
+<p id="notice"><%= notice %></p>
+
+<h3>Article by: <%= @article.user.name %> </h3>
+<h4>Title: <%= @article.title %></h4>
+
+<p>Content: <%= @article.body %></p>
+
+<%= @article.likes.count %> Likes
+
+<% like = current_user.likes.find_by(entity_type: "Article", entity_id: @article.id) %>
+<% if like.nil? %>
+  <form action="/likes" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="like[entity_id]" value="<%= @article.id %>">
+    <input type="hidden" name="like[entity_type]" value="<%= "Article" %>">
+     <input type="hidden" name="like[redirect_to]" value="<%= "Article" %>">
+    <input type="submit" value="Like">
+  </form>
+<% else %>
+  <form action="<%= like_path(like) %>" method="delete">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="like[redirect_to]" value="<%= "Article" %>">
+    <input type="submit" value="Unlike">
+  </form>
+<% end %>
+
+<% @article.likes.each do |like| %>
+  <p>Liked by: <%= like.user.name%> </p>
+<% end %>
+
+<p>
+  <%= render partial: 'comments/form' %>
+  <strong>Comments:<%=@article.comments.count%></strong>
+
+  <% @article.comments.reverse.each do |comment| %>
+     <p><%= comment.content %> - <%= comment.user.name %></p>
+      <% like = current_user.likes.find_by(entity_type: "Comment", entity_id: comment.id) %>
+      <% if like.nil? %>
+        <form action='/likes' method="post">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <input type="hidden" name="like[entity_id]" value="<%= comment.id %>">
+          <input type="hidden" name="like[entity_type]" value="<%= comment.class.name %>">
+          <input type="hidden" name="like[redirect_to]" value="<%= "Article" %>">
+          <input type="submit" value="Like">
+        </form>
+      <% else %>
+        <form action="<%= like_path(like) %>" method="delete">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <input type="hidden" name="like[redirect_to]" value="<%= "Article" %>">
+          <input type="hidden" name="like[like_id]" value="<%= like.id %>">
+
+          <input type="submit" value="Unlike">
+        </form>
+      <% end %>
+      <%= comment.likes.count %> Likes
+  <% end %>
+  
+</p>
+
+<% if current_user.email == @article.user.email %>
+  <ul>
+    <li><%= link_to "Edit Article", edit_article_path(@article) %></li>
+    <li><%= link_to "Destroy Article", article_path(@article), data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                    } %></li>
+  </ul>
+<% end %>

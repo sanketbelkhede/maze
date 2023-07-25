@@ -1,0 +1,156 @@
+<p id="notice"><%= notice %></p>
+<div class="Frame_8_maze_logo_box">
+  <div class="maze_logo_img_box">
+    <div class="maze_photo_add_user">
+      <img src="<%= image_url('Vector_logo_add_user.png') %>" alt="Description of the image">
+    </div>
+  </div>
+  <div class="Maze_text_add_user">Maze</div>
+</div>
+<div class="user_img_admin"></div>
+<!--<%= link_to "New Article", new_article_path %> %>-->
+<div class="feed_highlight"></div>
+
+<div class="User_navbar">
+  <div class="feedbox_admin" style="curser:pointer;">
+    <div class="feed_logo_box_admin">
+      <div class="Vector_feed_logo">
+        <img src="<%= image_url('Vector_feed_logo_self.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="feed_text_admin">
+      <%= link_to 'Feed', articles_path, class:"link", style: 'color: white;'%>
+    </div>
+  </div>
+
+  <div class="profile_box_admin">
+    <div class="profile_logo_box_admin">
+      <div class="Vector_profile_logo">
+        <img src="<%= image_url('Vector_profile_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="profile_text_admin">
+        <% if current_user %>
+          <%=link_to "Profile", user_path(current_user), class:"link", style: 'color: #606165;' %>
+    </div>
+  </div>
+
+  <div class="logout_box_user">
+    <div class="logout_logo_box_admin">
+      <div class="Vector_logout_logo">
+        <img src="<%= image_url('Vector_logout_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="logout_text_admin">
+        <%= link_to "Log out", sign_out_path, class:"link", style: 'color: #606165;' %>
+  <% end %>
+    </div>
+  </div>
+
+
+
+
+</div>
+<div class="Rectangle_1_add_users">
+<%= form_with(model: @article, url: articles_path) do |form| %>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+    <% @article.errors.full_messages_for(:title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %><br>
+    <% @article.errors.full_messages_for(:body).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+      <label for="privacy">Privacy</label><br>
+      <select id="article[privacy]" name="article[privacy]">
+        <option value="false">Public</option>
+        <option value="true">Private</option>
+      </select>
+  </div>
+
+  <div>
+    <%= form.submit "Create Article" %>
+  </div>
+<% end %>
+
+<h2>Articles</h2>
+
+  <% @articles.reverse.each do |article| %>
+        <% if !article.privacy? || current_user.admin? || (current_user == article.user)%>
+          <div>
+            <div>
+              <li><%= article.user.name%></li>
+              <p>
+              <li><%= link_to article.title, article %></li></p>
+              <% like = current_user.likes.find_by(entity_type: "Article", entity_id: article.id) %>
+              <% if like.nil? %>
+                <form action='/likes' method="post">
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                  <input type="hidden" name="like[entity_id]" value="<%= article.id %>">
+                  <input type="hidden" name="like[entity_type]" value="<%= "Article" %>">
+                  <input type="hidden" name="like[redirect_to]" value="<%= "Articles" %>">
+                  <input type="submit" value="Like">
+                </form>
+              <% else %>
+                <form action="<%= like_path(like) %>" method="delete">
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                  <input type="hidden" name="like[redirect_to]" value="<%= "Articles" %>">
+                  <input type="hidden" name="like[like_id]" value="<%= like.id %>">
+
+                  <input type="submit" value="Unlike">
+                </form>
+              <% end %>
+              <%= article.likes.count %> Likes
+              <!--<% article.likes.each do |like| %>
+                <p>Liked by: <%= like.user.email%> </p>
+              <% end %>
+              -->
+
+              <p> <%@article = article%>
+                <strong>Comments:<%=@article.comments.count%></strong>
+                <%= render partial: 'comments/form1', locals: { article: @article }%>
+              </p>
+
+              <% if article.comments.any? %>
+                <% last_comment = article.comments.last%>
+                <p><%= last_comment.content %> - <%= last_comment.user.name %></p>
+                <% like = current_user.likes.find_by(entity_type: "Comment", entity_id: last_comment.id) %>
+                <% if like.nil? %>
+                  <form action='/likes' method="post">
+                    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                    <input type="hidden" name="like[entity_id]" value="<%= last_comment.id %>">
+                    <input type="hidden" name="like[entity_type]" value="<%= "Comment" %>">
+                    <input type="hidden" name="like[redirect_to]" value="<%= "Articles" %>">
+                    <input type="submit" value="Like">
+                  </form>
+                <% else %>
+                  <form action="<%= like_path(like) %>" method="delete">
+                    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                    <input type="hidden" name="like[redirect_to]" value="<%= "Articles" %>">
+                    <input type="hidden" name="like[like_id]" value="<%= like.id %>">
+
+                    <input type="submit" value="Unlike">
+                  </form>
+                <% end %>
+                <%= last_comment.likes.count %> Likes
+              <% end %>
+
+              <!--<% article.comments.each do |comment| %>
+                <p> <%= comment.content %> By: <%= comment.user.email%></p>
+              <% end %>-->
+              
+            </div>
+          </div>
+        <% end %>
+    
+  <% end %>
+</div>

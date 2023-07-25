@@ -1,0 +1,119 @@
+<p id="notice"><%= notice %></p>
+
+    <div class="Frame_8_maze_logo_box">
+      <div class="maze_logo_img_box">
+        <div class="maze_photo_add_user">
+          <img src="<%= image_url('Vector_logo_add_user.png') %>" alt="Description of the image">
+        </div>
+      </div>
+      <div class="Maze_text_add_user">Maze</div>
+    </div>
+
+    <div class="User_Management_text">User Management</div>
+
+  <div class="manage_users_highlight"></div>
+        
+
+<div class="admin_navbar">
+  <div class="feedbox_admin">
+    <div class="feed_logo_box_admin">
+      <div class="Vector_feed_logo">
+        <img src="<%= image_url('Vector_feed_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="feed_text_admin">
+      <%= link_to 'Feed', articles_path, class:"link", style: 'color: #606165;'%>
+    </div>
+  </div>
+
+  <div class="profile_box_admin">
+    <div class="profile_logo_box_admin">
+      <div class="Vector_profile_logo">
+        <img src="<%= image_url('Vector_profile_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="profile_text_admin">
+        <% if current_user %>
+          <%=link_to "Profile", user_path(current_user), class:"link", style: 'color: #606165;' %>
+    </div>
+  </div>
+
+  <div class="manage_users_box_admin">
+    <div class="manage_users_logo_box_admin">
+      <div class="Vector_manage_users_logo">
+        <img src="<%= image_url('Vector_manage_users_logo_self.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="manage_users_text_admin">
+        <% if current_user.admin? %>
+          <%= link_to "Manage Users", admin_manage_users_path, class:"link", style: 'color: white;' %>
+    </div>
+  </div>
+
+  <div class="reports_box_admin">
+    <div class="reports_logo_box_admin">
+      <div class="Vector_reports_logo">
+        <img src="<%= image_url('Vector_reports_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="reports_text_admin">
+        <%= link_to "Reports", admin_reports_path, class:"link", style: 'color: #606165;'%>
+    <% end %>
+    </div>
+  </div>
+
+  <div class="logout_box_admin">
+    <div class="logout_logo_box_admin">
+      <div class="Vector_logout_logo">
+        <img src="<%= image_url('Vector_logout_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="logout_text_admin">
+        <%= link_to "Log out", sign_out_path, class:"link", style: 'color: #606165;' %>
+  <% end %>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+<div class="Rectangle_1_add_users">
+<div class="add_user_text">Add Users</div>
+<form action="/admin/create_user" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  
+  <div >
+  <label for="firstname">First name </label><br>
+  <input class="first_name_box_add_users" type="firstname" id="firstname" name="user[firstname]" value="<%= @user.firstname %>" />
+  </div>
+
+  <div >
+  <label for="lastname">Last name </label><br>
+  <input class="last_name_box_add_users" type="lastname" id="lastname" name="user[lastname]" value="<%= @user.lastname %>" />
+  </div>
+
+  <div>
+  <label for="email">Email</label><br>
+  <input class="email_box_add_users" type="email" id="email" name="user[email]" value="<%= @user.email %>" />
+  </div>
+
+  <div>
+  <label for="mobile">Mobile</label><br>
+  <input class="mobile_box_add_users" type="mobile" id="mobile" name="user[mobile]" />
+  </div>
+
+  <div>
+    <label for="admin">Role</label><br>
+    <select class="role_box_add_users" id="user[admin]" name="user[admin]">
+      <option value="false">User</option>
+      <option value="true">Admin</option>
+    </select>
+  </div>
+
+  <div class="create_user_box_add_users">
+  <input class="create_user_button" type="submit" value="Create User">
+  <span class="custom-input-value">Create User</span>
+</form>
+</div>

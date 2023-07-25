@@ -1,0 +1,91 @@
+<p id="notice"><%= notice %></p>
+
+<div class="Frame_8_maze_logo_box">
+  <div class="maze_logo_img_box">
+    <div class="maze_photo_add_user">
+      <img src="<%= image_url('Vector_logo_add_user.png') %>" alt="Description of the image">
+    </div>
+  </div>
+  <div class="Maze_text_add_user">Maze</div>
+</div>
+<div class="user_img_admin"></div>
+<!--<%= link_to "New Article", new_article_path %> %>-->
+<div class="reports_highlight"></div>
+
+<div class="admin_navbar">
+  <div class="feedbox_admin">
+    <div class="feed_logo_box_admin">
+      <div class="Vector_feed_logo">
+        <img src="<%= image_url('Vector_feed_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="feed_text_admin">
+      <%= link_to 'Feed', admin_path, class:"link", style: 'color: #606165;'%>
+    </div>
+  </div>
+
+  <div class="profile_box_admin">
+    <div class="profile_logo_box_admin">
+      <div class="Vector_profile_logo">
+        <img src="<%= image_url('Vector_profile_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="profile_text_admin">
+        <% if current_user %>
+          <%=link_to "Profile", user_path(current_user), class:"link", style: 'color: #606165;' %>
+    </div>
+  </div>
+
+  <div class="manage_users_box_admin">
+    <div class="manage_users_logo_box_admin">
+      <div class="Vector_manage_users_logo">
+        <img src="<%= image_url('Vector_manage_users_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="manage_users_text_admin">
+        <% if current_user.admin? %>
+          <%= link_to "Manage Users", admin_manage_users_path, class:"link", style: 'color: #606165;' %>
+    </div>
+  </div>
+
+  <div class="reports_box_admin">
+    <div class="reports_logo_box_admin">
+      <div class="Vector_reports_logo">
+        <img src="<%= image_url('Vector_reports_logo_self.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="reports_text_admin">
+        <%= link_to "Reports", admin_reports_path, class:"link", style: 'color: white;'%>
+    <% end %>
+    </div>
+  </div>
+
+  <div class="logout_box_admin">
+    <div class="logout_logo_box_admin">
+      <div class="Vector_logout_logo">
+        <img src="<%= image_url('Vector_logout_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="logout_text_admin">
+        <%= link_to "Log out", sign_out_path, class:"link", style: 'color: #606165;' %>
+  <% end %>
+    </div>
+  </div>
+
+
+
+
+</div>
+<div class="Rectangle_1_add_users">
+<p>
+CSV:
+  <%= link_to "All User Report", users_download_csv_path(format: :csv) %> |
+  <%= link_to "Post Wise Report", articles_download_csv_path(format: :csv) %> |
+  <%= link_to "More than 2 Articles Report", users_download_10_csv_path(format: :csv) %>
+</p>
+<p>
+XLSX:
+  <%= link_to "Articles", articles_download_xlsx_path(format: :csv), class: 'button' %>
+  <%= link_to "Users", users_download_xlsx_path(format: :csv), class: 'button' %>
+</p>
+</div>

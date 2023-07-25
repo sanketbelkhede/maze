@@ -1,0 +1,222 @@
+
+<p id="notice"><%= notice %></p>
+<p id="notice"><%= notice %></p>
+<div class="Frame_8_maze_logo_box">
+  <div class="maze_logo_img_box">
+    <div class="maze_photo_add_user">
+      <img src="<%= image_url('Vector_logo_add_user.png') %>" alt="Description of the image">
+    </div>
+  </div>
+  <div class="Maze_text_add_user">Maze</div>
+</div>
+<div class="user_img_admin"></div>
+<!--<%= link_to "New Article", new_article_path %> %>-->
+<div class="User_Management_text">User Management</div>
+<div class="manage_users_highlight"></div>
+
+<div class="admin_navbar">
+  <div class="feedbox_admin">
+    <div class="feed_logo_box_admin">
+      <div class="Vector_feed_logo">
+        <img src="<%= image_url('Vector_feed_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="feed_text_admin">
+      <%= link_to 'Feed', admin_path, class:"link", style: 'color: #606165;'%>
+    </div>
+  </div>
+
+  <div class="profile_box_admin">
+    <div class="profile_logo_box_admin">
+      <div class="Vector_profile_logo">
+        <img src="<%= image_url('Vector_profile_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="profile_text_admin">
+        <% if current_user %>
+          <%=link_to "Profile", user_path(current_user), class:"link", style: 'color: #606165;' %>
+    </div>
+  </div>
+
+  <div class="manage_users_box_admin">
+    <div class="manage_users_logo_box_admin">
+      <div class="Vector_manage_users_logo">
+        <img src="<%= image_url('Vector_manage_users_logo_self.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="manage_users_text_admin">
+        <% if current_user.admin? %>
+          <%= link_to "Manage Users", admin_manage_users_path, class:"link", style: 'color: #ffffff;' %>
+    </div>
+  </div>
+
+  <div class="reports_box_admin">
+    <div class="reports_logo_box_admin">
+      <div class="Vector_reports_logo">
+        <img src="<%= image_url('Vector_reports_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="reports_text_admin">
+        <%= link_to "Reports", admin_reports_path, class:"link", style: 'color: #606165;'%>
+    <% end %>
+    </div>
+  </div>
+
+  <div class="logout_box_admin">
+    <div class="logout_logo_box_admin">
+      <div class="Vector_logout_logo">
+        <img src="<%= image_url('Vector_logout_logo.png') %>" alt="Description of the image">
+      </div>
+    </div>
+    <div class="logout_text_admin">
+        <%= link_to "Log out", sign_out_path, class:"link", style: 'color: #606165;' %>
+  <% end %>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+<div class="Rectangle_1_add_users">
+<div class="upload_users_box">
+  <div class="upload_users_logo_box">
+    <div class="Vector_upload_users_logo">
+      <img src="<%= image_url('Vector_upload_users_logo.png') %>" alt="Description of the image">
+    </div>
+  </div>
+  <div class="upload_users_text">
+    <%= link_to "Upload Users", admin_upload_users_path, class:'link', style:"color:#377DFF;"%>
+  </div>
+</div>
+
+<div class="create_users_box_manage_users">
+  <div class="create_users_logo_box_manage_users">
+    <div class="Vector_create_users_logo">
+      <img src="<%= image_url('Vector_create_users_logo.png') %>" alt="Description of the image">
+    </div>
+  </div>
+  <div  class="create_user_text_manage_users">
+    <%= link_to "Create User", admin_create_user_new_path, class: 'link', style: "color:white;"%>
+  </div>
+</div>
+
+<% if @articles %>
+<% @articles.reverse.each do |article| %>
+        <% if !article.privacy? || current_user.admin? || (current_user == article.user)%>
+          <div>
+            <div>
+              <li><%= link_to article.user.name, user_path(article.user)%></li>
+              <p>
+              <li><%= link_to article.title, article %></li></p>
+              <% like = current_user.likes.find_by(article: article) %>
+              <% if like.nil? %>
+                <form action='/likes/create_like' method="post">
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                  <input type="hidden" name="like[article_id]" value="<%= article.id %>">
+                  <input type="submit" value="Like">
+                </form>
+              <% else %>
+                <form action=<%="/likes/#{like.id}/destroy_like"%> method="delete">
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                  <input type="hidden" name="like[article_id]" value="<%= article.id %>">
+                  <input type="hidden" name="like[like_id]" value="<%= like.id %>">
+
+                  <input type="submit" value="Unlike">
+                </form>
+              <% end %>
+              <%= article.likes.count %> Likes
+              <!--<% article.likes.each do |like| %>
+                <p>Liked by: <%= like.user.email%> </p>
+              <% end %>
+              -->
+
+              <p> <%@article = article%>
+                <strong>Comments:<%=@article.comments.count%></strong>
+                <%= render partial: 'comments/form1', locals: { article: @article }%>
+              </p>
+
+              <% if article.comments.any? %>
+                <p><%= article.comments.last.content %> - <%= article.comments.last.user.name %></p>
+              <% end %>
+
+              <!--<% article.comments.each do |comment| %>
+                <p> <%= comment.content %> By: <%= comment.user.email%></p>
+              <% end %>-->
+              
+            </div>
+          </div>
+        <% end %>
+  <% end %>
+  <% end %>
+
+
+
+<div class="list_of_users_text">List of Users</div>
+    <% @users.each do |user| %>
+        <% if user.id != 1 %>
+          <table class = "table table-striped table-bordered">
+              <tbody>
+                  <tr class="my-5" style="text-align: center">
+
+                    <td>
+                      <div style="border: 1px solid #ccc; padding: 10px; display: flex; align-items: center" >
+                        <img url="app/assets/images/Vector_user.png" style="width:47px; height:47px">
+                        <div>dkl
+                        </div>
+                        <div>
+                          <%= user.name%>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <%= user.mobile%>
+                    </td>
+                    <td>
+                      <%= user.email%>
+                    </td>
+                    <td>
+                      <% if user.active? %>
+                        <form action=<%="/admin/#{user.id}/deactivate_user"%> method="patch">
+                          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                          <input type="hidden" name="user[active]" value="<%= user.active %>">
+                          <input type="submit" value="Deactivate">
+                        </form>
+                      <% else %>
+                        <form action=<%="/admin/#{user.id}/activate_user"%> method="patch">
+                          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                          <input type="hidden" name="user[active]" value="<%= user.active %>">
+
+                          <input type="submit" value="Activate">
+                        </form>
+                      <% end %>
+                    </td>
+                  </tr>
+              </tbody>
+          </table>
+
+  
+          
+            <!--<div>Name: <%= user.name%></li>
+            <div>Email: <%= user.email %></p>
+            <div>Mobile: <%= user.mobile %></p>
+            <% if user.active? %>
+              <form action=<%="/admin/#{user.id}/deactivate_user"%> method="patch">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input type="hidden" name="user[active]" value="<%= user.active %>">
+                <input type="submit" value="Deactivate">
+              </form>
+            <% else %>
+              <form action=<%="/admin/#{user.id}/activate_user"%> method="patch">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input type="hidden" name="user[active]" value="<%= user.active %>">
+
+                <input type="submit" value="Activate">
+              </form>
+            <% end %>-->
+        <% end %>      
+    <% end %>
+
+</div>
+

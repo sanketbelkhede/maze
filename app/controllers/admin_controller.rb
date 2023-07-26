@@ -14,15 +14,29 @@ class AdminController < ApplicationController
     
         file = File.open(file)
         csv = CSV.parse(file, headers: true)
+        # csv.each do |row|
+        #   user_hash = {}
+        #   user_hash[:email] = row["Email"]
+        #   User.create(user_hash)
+        # end
+
         csv.each do |row|
-          user_hash = {}
-          user_hash[:email] = row["Email"]
-          User.create(user_hash)
+            user_hash = {}
+            name = row["Name"]
+            firstname, lastname = name.split(" ", 2).map(&:strip)
+            user_hash = {
+              email: row["Email"],
+              name: row["Name"],
+              firstname: firstname,
+              lastname: lastname,
+              mobile: row["Mobile"]
+            }
+            User.create(user_hash)
         end
         
         # StatusOfUploadedUsersMailer.send_status_email(current_user).deliver
         # SendStatusJob.perform_later(current_user)
-        redirect_to admin_path, notice: "Users imported!"
+        redirect_to admin_manage_users_path, notice: "Users imported!"
     end
 
     def activate_user
